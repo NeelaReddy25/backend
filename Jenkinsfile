@@ -20,12 +20,28 @@ pipeline {
                 } 
             }
         }
+        stage ('Install Dependencies') {
+            steps {
+                sh """
+                npm install
+                ls -ltr
+                echo "applicatio version: $appversion"
+                """
+            }
+        }
+        stage ('Build') {
+            steps {
+                sh """
+                zip -r backend-${appVersion} * -x Jenkinsfile -x backend-${appVersion}
+                ls -ltr
+                """
+            }
+        }
     }
     post {
         always {
             echo 'I will always say Hello again!'
-            echo "applicatio version: $appversion"
-            //deleteDir()
+            deleteDir()
         }
         success {
             echo 'I will run when pipeline is success'
