@@ -8,18 +8,18 @@ pipeline {
         ansiColor('xterm')
     }
     stages {
-        stage ('Install Dependencies') {
+        stage ('read the version') {
             steps {
-                sh """
-                npm install
-                ls -ltr
-                """
+                def packageJson = readJSON file: 'package.json'
+                def appVersion = packageJson.version
+                echo "applicatio version: $appversion"
             }
         }
     }
     post {
         always {
             echo 'I will always say Hello again!'
+            echo "applicatio version: $appversion"
             deleteDir()
         }
         success {
