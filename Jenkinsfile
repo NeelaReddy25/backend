@@ -7,7 +7,7 @@ pipeline {
         disableConcurrentBuilds()
         ansiColor('xterm')
     }
-    arameters{
+    parameters{
         booleanParam(name: 'deploy', defaultValue: false, description: 'Toggle this value')
     }
     environment{
