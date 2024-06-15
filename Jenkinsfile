@@ -37,14 +37,6 @@ pipeline {
                 """
             }
         }
-
-        stage('Nexus Artifact uploader') {
-            steps{
-                script{
-                    
-                }
-            }
-        }
     }
     post {
         always {
