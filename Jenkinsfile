@@ -7,9 +7,9 @@ pipeline {
         disableConcurrentBuilds()
         ansiColor('xterm')
     }
-    // parameters{
-    //     booleanParam(name: 'deploy', defaultValue: false, description: 'Toggle this value')
-    // }
+    parameters{
+        booleanParam(name: 'deploy', defaultValue: false, description: 'Toggle this value')
+    }
     environment{
         def appVersion = '' //variable declaration
         nexusUrl = 'nexus.neelareddy.store:8081'
@@ -84,21 +84,21 @@ pipeline {
                 }
             }
         }
-    // stage('Deploy'){
-    //         // when{
-    //         //     expression{
-    //         //         params.deploy
-    //         //     }
-    //         // }
-    //         steps{
-    //             script{
-    //                 def params = [
-    //                     string(name: 'appVersion', value: "${appVersion}")
-    //                 ]
-    //                 build job: 'backend-deploy', parameters: params, wait: false
-    //             }
-    //         }
-    //     }
+    stage('Deploy'){
+            when{
+                expression{
+                    params.deploy
+                }
+            }
+            steps{
+                script{
+                    def params = [
+                        string(name: 'appVersion', value: "${appVersion}")
+                    ]
+                    build job: 'backend-deploy', parameters: params, wait: false
+                }
+            }
+        }
     }
     post {
         always {
