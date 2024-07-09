@@ -36,7 +36,7 @@ pipeline {
         stage('Build'){
             steps{
                 sh """
-                zip -q -r backend-${appVersion}.zip * -x Jenkinsfile -x backend-${appVersion}.zip
+                zip -q -r backend-${appVersion}.zip * -x Jenkinsfile -x backend-*.zip
                 ls -ltr
                 """
             }
@@ -55,13 +55,13 @@ pipeline {
             }
         }
 
-        // stage("Quality Gate") {
-        //     steps {
-        //       timeout(time: 30, unit: 'MINUTES') {
-        //         waitForQualityGate abortPipeline: true
-        //       }
-        //     }
-        // }
+        stage("Quality Gate") {
+            steps {
+              timeout(time: 30, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+        }
         
         stage('Nexus Artifact Upload'){
             steps{
